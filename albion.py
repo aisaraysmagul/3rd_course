@@ -1,8 +1,9 @@
-import imaplib, email
+import imaplib
+import email
 
-user = 'albioncompany18@gmail.com'
-password = 'Albion2018'
-imap_url = 'imap.gmail.com'
+USER = 'albioncompany18@gmail.com'
+PASSWORD = 'Albion2018'
+IMAP_URL = 'imap.gmail.com'
 
 def get_body(msg):
     if msg.is_multipart():
@@ -10,22 +11,21 @@ def get_body(msg):
     else:
         return msg.get_payload(None, True)
 
-def search(key, value, conn):
-    result, data = conn.search(None, key, '"()"'.format(value))
-    return data
+def get_emails(connection):
+    msgs_dict = {}
+    result, data = connection.uid('search', None, "ALL")
+    if result == 'OK':
+        for num in data[0].split():
+            result, data = connection.uid('fetch', num, '(RFC822)')
+            if result == 'OK':
+                email_message = email.message_from_bytes(data[0][1])
+                msgs_dict[email_message['From'].split(' ')[1]] = get_body(email_message)
+    return msgs_dict
 
-conn = imaplib.IMAP4_SSL(imap_url)
-conn.login(user, password)
+conn = imaplib.IMAP4_SSL(IMAP_URL)
+conn.login(USER, PASSWORD)
 conn.select('INBOX')
 
-msgs_dict = {}
-result, data = conn.uid('search', None, "ALL")
-if result == 'OK':
-    for num in data[0].split():
-        result, data = conn.uid('fetch', num, '(RFC822)')
-        if result == 'OK':
-            email_message = email.message_from_bytes(data[0][1])
-            msgs_dict[email_message['From'].split(' ')[1]] = get_body(email_message)
-
+dictionary = get_emails(conn)
 for msg in msgs_dict:
     print(msg, msgs_dict[msg])
