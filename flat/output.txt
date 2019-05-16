@@ -1,0 +1,39 @@
+    1      1   Identifier      count
+    1      7   Op_assign     
+    1      9   Integer              1
+    1     10   Semicolon     
+    2      1   Keyword_while 
+    2      7   LeftParen     
+    2      8   Identifier      count
+    2     14   Op_less       
+    2     16   Integer              6
+    2     17   RightParen    
+    2     19   LeftBrace     
+    3      5   Keyword_if    
+    3      8   LeftParen     
+    3      9   Identifier      count
+    3     15   Op_mod        
+    3     17   Integer              2
+    3     19   Op_equal      
+    3     22   Integer              0
+    3     23   RightParen    
+    3     24   LeftBrace     
+    4      9   Keyword_print 
+    4     14   LeftParen     
+    4     15   Identifier      count
+    4     20   RightParen    
+    4     21   Semicolon     
+    5      9   Keyword_print 
+    5     14   LeftParen     
+    5     15   String          "\n"
+    5     19   RightParen    
+    5     20   Semicolon     
+    6      5   RightBrace    
+    7      5   Identifier      count
+    7     11   Op_assign     
+    7     13   Identifier      count
+    7     19   Op_add        
+    7     21   Integer              1
+    7     22   Semicolon     
+    8      1   RightBrace    
+    9      1   End_of_input  
